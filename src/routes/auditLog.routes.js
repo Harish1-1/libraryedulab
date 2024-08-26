@@ -7,13 +7,13 @@ const auditLogService = new AuditLogService(AuditLog);
 
 router.get("/", async (req, res) => {
     try {
-      // Extract and validate the query parameters
+      
       const { startDate, endDate, limit, skip } = req.query;
   
-      // Prepare options for filtering and pagination
+     
       const options = {};
   
-      // Validate and set the date range if provided
+      
       if (startDate) {
         const start = new Date(startDate);
         if (!isNaN(start)) {
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
         }
       }
   
-      // Validate and set pagination options if provided
+      
       if (limit) {
         const parsedLimit = parseInt(limit, 10);
         if (!isNaN(parsedLimit) && parsedLimit > 0) {
@@ -51,7 +51,7 @@ router.get("/", async (req, res) => {
         }
       }
   
-      // Fetch the logs with the applied options
+      
       const logs = await auditLogService.getLogs(req.query, options);
       res.json(logs);
     } catch (err) {
