@@ -4,7 +4,7 @@ class AuthorService {
     }
   
     async createAuthor(authorData) {
-        // Check if an author with the same name and bio already exists
+       
         const existingAuthor = await this.authorModel.findOne({
           name: authorData.name,
           bio: authorData.bio,
@@ -14,10 +14,10 @@ class AuthorService {
           throw new Error('Author with the same name and bio already exists');
         }
     
-        // If not, create a new author with a unique authorId
+       
         const author = new this.authorModel({
           ...authorData,
-          authorId: uuidv4(),  // Generate a UUID for authorId
+          authorId: uuidv4(), 
         });
     
         return await author.save();
@@ -36,7 +36,7 @@ class AuthorService {
       return await this.authorModel.findByIdAndDelete(authorId);
     }
   
-    // Other author-related methods can be added here
+    
   }
   
   module.exports = AuthorService;
