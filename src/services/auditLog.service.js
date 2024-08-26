@@ -17,7 +17,7 @@ class AuditLogService {
     async getLogs(filter = {}, options = {}) {
         const query = this.auditLogModel.find(filter);
       
-        // Apply date range filtering if provided
+       
         if (options.startDate || options.endDate) {
           const dateFilter = {};
           if (options.startDate) {
@@ -31,19 +31,19 @@ class AuditLogService {
           }
         }
       
-        // Apply pagination if provided
+        
         if (options.limit) {
-          query.limit(parseInt(options.limit, 10)); // Convert limit to integer
+          query.limit(parseInt(options.limit, 10)); 
         }
         if (options.skip) {
-          query.skip(parseInt(options.skip, 10)); // Convert skip to integer
+          query.skip(parseInt(options.skip, 10)); 
         }
       
         return await query.populate("user").exec();
       }
       
   
-    // Add additional methods for filtering, paginating, etc.
+    
   }
   
   module.exports = AuditLogService;
