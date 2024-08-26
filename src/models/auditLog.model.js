@@ -8,10 +8,10 @@ const auditLogSchema = new mongoose.Schema({
   entityId: { type: mongoose.Schema.Types.ObjectId, required: true },
   timestamp: { type: Date, default: Date.now },
   details: { type: Object },
-  hash: { type: String, required: true },  // New field to store the hash
+  hash: { type: String, required: true },  
 });
 
-// Pre-save hook to generate a hash
+
 auditLogSchema.pre('save', function (next) {
   const logString = `${this.action}-${this.user}-${this.entity}-${this.entityId}-${this.timestamp}`;
   this.hash = crypto.createHash('sha256').update(logString).digest('hex');
