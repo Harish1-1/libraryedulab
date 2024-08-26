@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
 });
 
-// Pre-save hook to hash the password
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
