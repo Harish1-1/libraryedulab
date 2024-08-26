@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Add routes for borrowing, returning, updating, and deleting books
+
 router.post('/borrow', async (req, res) => {
     try {
       const { bookId, userId, dueDate } = req.body;
