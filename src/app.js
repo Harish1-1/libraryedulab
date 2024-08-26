@@ -5,14 +5,14 @@ const cors = require('cors');
 
 const app = express();
 
-// Connect to the database
+
 connectDB();
 
-// Middleware
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// Define routes
+
 app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/authors', require('./routes/author.routes'));
 app.use('/api/books', require('./routes/book.routes'));
