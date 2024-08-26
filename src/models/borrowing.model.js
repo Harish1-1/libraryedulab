@@ -1,4 +1,4 @@
-// borrowing.model.js
+
 
 const mongoose = require('mongoose');
 
