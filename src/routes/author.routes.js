@@ -26,6 +26,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Add other author routes (update, delete) as needed
+
 
 module.exports = router;
