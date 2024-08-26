@@ -9,7 +9,7 @@ class UserService {
   }
 
   async createUser(userData) {
-    // Check if a user with the same email already exists
+    
     const existingUser = await this.userModel.findOne({
       email: userData.email,
     });
@@ -18,15 +18,15 @@ class UserService {
       throw new Error('User with the same email already exists');
     }
 
-    // Hash the password before saving
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
-    // Create a new user with a unique userId and hashed password
+    
     const user = new this.userModel({
       ...userData,
-      userId: uuidv4(),  // Generate a UUID for userId
-      password: hashedPassword,  // Store the hashed password
+      userId: uuidv4(), 
+      password: hashedPassword, 
     });
 
     return await user.save();
@@ -39,7 +39,7 @@ class UserService {
   async updateUser(userId, userData) {
     const updatedUser = await this.userModel.findByIdAndUpdate(userId, userData, { new: true });
 
-    // Log the action
+    
     await auditLogService.logAction(
       'UPDATE_USER',
       userId,
@@ -54,7 +54,7 @@ class UserService {
   async deleteUser(userId) {
     const deletedUser = await this.userModel.findByIdAndDelete(userId);
 
-    // Log the action
+    
     await auditLogService.logAction(
       'DELETE_USER',
       userId,
@@ -73,7 +73,7 @@ class UserService {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error('Invalid credentials');
   
-    // Generate JWT with user role
+    
     const token = jwt.sign(
       { userId: user.userId, role: user.role },
       process.env.JWT_SECRET,
@@ -95,7 +95,7 @@ class UserService {
     user.password = hashedPassword;
     await user.save();
   
-    // Log the password change action
+    
     await auditLogService.logAction(
       'PASSWORD_CHANGE',
       userId,
