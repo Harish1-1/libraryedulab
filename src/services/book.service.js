@@ -9,7 +9,7 @@ class BookService {
   }
   
     async createBook(bookData) {
-        // Check if a book with the same title and author already exists
+        
         const existingBook = await this.bookModel.findOne({
           title: bookData.title,
           author: bookData.author,
@@ -19,10 +19,10 @@ class BookService {
           throw new Error('Book with the same title and author already exists');
         }
     
-        // If not, create a new book with a unique bookId
+       
         const book = new this.bookModel({
           ...bookData,
-          bookId: uuidv4(),  // Generate a UUID for bookId
+          bookId: uuidv4(),  
         });
     
         return await book.save();
@@ -42,7 +42,7 @@ class BookService {
     }
   
     async borrowBook(bookId, userId, dueDate) {
-        // Check if the user has already reached the maximum borrowing limit
+        
         const activeBorrowings = await Borrowing.countDocuments({
           user: userId,
           returnedAt: { $exists: false },
@@ -52,7 +52,7 @@ class BookService {
           throw new Error(`User has reached the maximum borrowing limit of ${MAX_BORROW_LIMIT} books.`);
         }
     
-        // Check if the user already has an active borrowing for this book
+        
         const existingBorrowing = await Borrowing.findOne({
           user: userId,
           book: bookId,
@@ -63,7 +63,7 @@ class BookService {
           throw new Error('User has already borrowed this book and has not returned it yet.');
         }
     
-        // Check if the book exists and has available copies
+        
         const book = await this.bookModel.findById(bookId);
         if (!book) {
           throw new Error('Book not found.');
@@ -73,7 +73,7 @@ class BookService {
           throw new Error('No available copies for this book.');
         }
     
-        // Proceed to borrow the book
+        
         book.availableCopies -= 1;
         await book.save();
     
@@ -87,7 +87,7 @@ class BookService {
     
         const savedBorrowing = await borrowing.save();
     
-        // Log the borrowing action
+        
         await this.auditLogService.logAction(
           'BORROW_BOOK',
           userId,
@@ -116,7 +116,7 @@ class BookService {
         book.availableCopies += 1;
         await book.save();
       
-        // Log the returning action
+        
         await this.auditLogService.logAction(
           'RETURN_BOOK',
           borrowing.user,
@@ -130,7 +130,7 @@ class BookService {
       
       
       
-      // Schedule this function to run daily using a scheduler like cron
+      
       
   }
   
